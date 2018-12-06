@@ -90,9 +90,13 @@ def assign_score_to_review_with_text():
 
 if __name__ == '__main__':
 
-    model_file = 'data/model_0.01_18'
+    if len(sys.argv) <= 1:
+        raise Exception('Need to run command as python assign.py [path_to_model_bin_file]')
+    else:
+        model_file = sys.argv[1]
+
     model = FastText()
-    model.load_model(model_file + '.bin')
+    model.load_model(model_file)
 
     assign_score_to_review(model)
     assign_score_to_review_with_text()

@@ -123,7 +123,7 @@ def remove_stop_words():
 if __name__ == '__main__':
 
     business_json_to_rows()
-    # review_json_to_rows()
+    review_json_to_rows()
     split_train_validate()
 
     remove_stop_words()
