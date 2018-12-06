@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="jquery.fullPage.css">
+    <link href="https://fonts.googleapis.com/css?family=Raleway|Oxigen|Open+Sans" rel="stylesheet">
+    <script src="https://d3js.org/d3.v4.min.js"></script>
+    <script src="jquery-1.11.3.js"></script>
+    <script src="jquery.fullPage.min.js"></script>
+</head>
+<body>
+<div id="wrapper">
+    <div class="section" style="width:100%; height:100%; padding-left:3%; padding-right:1%;">
+        <div style="float: left; width: 80%;">
+            <div style="font-size: 75px; font-weight: bold; color:#08519c;">Review sentiment analysis using Fasttext<br/></div>
+            <p style="font-size: 33.5px; -webkit-margin-before: 0.2em; -webkit-margin-after: 0.2em; color:#404040;">with Yelp open data</p><br/>
+            <div class="contentText">
+                <div style="font-size: 18px; font-weight: bold; color:#1a1a1a;">Objective of this project: </div><br>
+                As an UIUC 'CS 410: Text Information Systems' course project, the objective is to generate a machine learning model that can determine the sentiment (positive vs negative) of given text.
+                It uses 1~5 star-labelled business review data from Yelp open data as source. After certain pre-processing, data then gets fed into Fasttext (word2vec) module for training.
+                After the model has been generated, the model is used for assigning sentiment score for the whole Yelp review open data as discriminative as possible (rather than just star-1, 2, 3, 4, 5)
+                and re-ranks them in clustered groups based on different meta data like cuisine, city, etc.
+                <br><br>
+                <div style="font-size: 16px; font-weight: bold; color:#1a1a1a;">Gitlab</div><br>
+                Python codes that are used to pre-process the data, train model, and re-rank the reviews are all in <a href="https://github.com/girorhee/girorhee.github.io">Here</a>.
+                <br><br>
+                <div style="font-size: 16px; font-weight: bold; color:#1a1a1a;">Data source</div><br>
+                Yelp open data that has been used for this project can be downloaded <a href="https://www.yelp.com/dataset" target="_blank">Here</a>.<br><br>
+                <div style="font-size: 16px; font-weight: bold; color:#1a1a1a;">Visualization</div><br>
+                This page is generated using <a href="https://github.com/alvarotrigo/fullpage.js" target="_blank">Fullpage</a> javascript with embedding <a href="https://www.tableau.com" target="_blank">Tableau</a> dashboard.<br><br>
+                <span style="color:#f4511e;">Scroll down to see the result.</span>
+            </div>
+        </div>
+    </div>
+    <div id="sectionStart" class="section" style="width:100%; height:100%; padding-left:3%; padding-right:1%;">
+        <div style="float: left; width: 90%;">
+            <p style="font-size: 40px; font-weight: bold; color:#1a1a1a;">Review sentiment model training</p>
+            <p style="font-size: 18px; font-weight: bold; color:#1a1a1a;">Steps</p>
+            <p style="font-size: 16px; font-weight: bold; color:#1a1a1a;">1. Download Yelp open data set</p>
+            <p class="contentText">This project uses Yelp data set challenge open data (Round 12).
+                It contains 19,564,818 reviews on 188,593 business in US and Canada (However, this data set
+                does not cover 100% of cities though). The file format is in JSON.
+            </p>
+            <p style="font-size: 16px; font-weight: bold; color:#1a1a1a;">2. Pre-process the text data</p>
+            <p class="contentText">First, transform JSON format data into rows and columns using Pandas.
+                Then remove some stop keywords and special characters that might not be very helpful in determining the
+                sentiment. Convert all characters into lower case. Reviews that has 1,2 stars are treated as 'BAD'
+                sentiment labels while reviews with 4, 5 stars are considered 'GOOD'. 3 stars are labelled 'NEUTRAL'.
+            </p>
+            <p style="font-size: 16px; font-weight: bold; color:#1a1a1a;">3. Split the review data 80:20 randomly</p>
+            <p class="contentText">Among the preprocessed review data, randomly select 80% of the rows into train set.
+            This set is used to generate model. The rest of 20% will be used to check the performance of the model.</p>
+            <p style="font-size: 16px; font-weight: bold; color:#1a1a1a;">4. Train the model using Fasttext (word2vec)</p>
+            <p class="contentText">Fasttext is a library for efficient
+                text classification and representation learning. It is similar as word2vec which embeds words into
+            vector representative using word co occurrence information within certain window. The main difference between
+            word2vec and Fasttext is that Fasttext can use sub-word ngram when embedding the words (e.g. Apple ->
+            'ap', 'app', 'appl', 'apple', 'ppl', 'pple', 'pple', 'ple', 'le'). For more information, please visit
+            <a href="https://fasttext.cc" target="_blank">Here</a>.</p>
+            <p style="font-size: 16px; font-weight: bold; color:#1a1a1a;">5. Test the model against the validation data</p>
+            <p class="contentText">After a model is generated, its performance is measured against the 20% of validation
+            set using metrics such as precision, recall, F1. </p>
+        </div>
+    </div>
+    <div class="section" style="width:100%; height:100%; padding-left:3%; padding-right:1%;">
+        <div style="float: right; width: 60%;">
+            <p style="font-size: 40px; font-weight: bold; color:#1a1a1a;"></p>
+            <div class='tableauPlaceholder' id='viz1543972682926' style='position: relative'><noscript><a href='#'><img alt=' ' src='https:&#47;&#47;public.tableau.com&#47;static&#47;images&#47;cs&#47;cs410_train_performance&#47;train&#47;1_rss.png' style='border: none' /></a></noscript><object class='tableauViz'  style='display:none;'><param name='host_url' value='https%3A%2F%2Fpublic.tableau.com%2F' /> <param name='embed_code_version' value='3' /> <param name='site_root' value='' /><param name='name' value='cs410_train_performance&#47;train' /><param name='tabs' value='no' /><param name='toolbar' value='yes' /><param name='static_image' value='https:&#47;&#47;public.tableau.com&#47;static&#47;images&#47;cs&#47;cs410_train_performance&#47;train&#47;1.png' /> <param name='animate_transition' value='yes' /><param name='display_static_image' value='yes' /><param name='display_spinner' value='yes' /><param name='display_overlay' value='yes' /><param name='display_count' value='yes' /></object></div>                <script type='text/javascript'>                    var divElement = document.getElementById('viz1543972682926');                    var vizElement = divElement.getElementsByTagName('object')[0];                    vizElement.style.width='1000px';vizElement.style.height='527px';                    var scriptElement = document.createElement('script');                    scriptElement.src = 'https://public.tableau.com/javascripts/api/viz_v1.js';                    vizElement.parentNode.insertBefore(scriptElement, vizElement);                </script>
+        </div>
+        <div style="float: left; width: 35%;">
+            <p style="font-size: 40px; font-weight: bold; color:#1a1a1a;">Model performance</p>
+            <p style="font-size: 16px; font-weight: bold; color:#1a1a1a;">Test against validation set</p>
+            <p class="contentText">Once a model with certain hyper parameter is generated, its performance is measured
+                against the 20% of validation set using metrics such as precision, recall, F1. Both micro level and
+                macro level metrics are used in this project. Micro level as in pooling decisions for each class altogether
+                to measure overall performance whereas macro level uses arithmetic averages of each class performance
+                to calculate the overall.
+            </p>
+            <p style="font-size: 16px; font-weight: bold; color:#1a1a1a;">Iteration to find best hyper-parameter</p>
+            <p class="contentText">Using different set of hyper-parameters, increased the training epoch by 1 to
+            find the best epoch that shows highest micro F1 against the validation set. Most of the cases the best
+            epoch was around 10 epochs.</p>
+            <p style="font-size: 16px; font-weight: bold; color:#1a1a1a;">Multi vs Binary classification</p>
+            <p class="contentText">The model was generated as multi-classification with 3 classes; GOOD, BAD, NEUTRAL.
+                However, as assigning the probability score of this sentiment on each review is needed, binary classification
+                was preferred because it would then make the likelihood between 0~1 score. With multi-classification
+                including NEUTRAL class, it was difficult to use the probability directly to assign sentiment score.
+                <br><br>
+                So after excluding the NEUTRAL case from both training and validation set, and re-trained as binary
+                classification model, the metrics got better to reach 98.4% in micro F1. This does not necessary mean
+                that the model is out-performing the previous version because the standard is now different from
+                3 classes to 2 classes.
+            </p>
+        </div>
+    </div>
+    <div class="section" style="width:100%; height:100%; padding-left:3%; padding-right:1%;">
+        <div style="float: right; width: 60%;">
+            <p style="font-size: 40px; font-weight: bold; color:#1a1a1a;"></p>
+            <div class='tableauPlaceholder' id='viz1543972869449' style='position: relative'><noscript><a href='#'><img alt=' ' src='https:&#47;&#47;public.tableau.com&#47;static&#47;images&#47;cs&#47;cs410_business_score&#47;sentimentdist&#47;1_rss.png' style='border: none' /></a></noscript><object class='tableauViz'  style='display:none;'><param name='host_url' value='https%3A%2F%2Fpublic.tableau.com%2F' /> <param name='embed_code_version' value='3' /> <param name='site_root' value='' /><param name='name' value='cs410_business_score&#47;sentimentdist' /><param name='tabs' value='no' /><param name='toolbar' value='yes' /><param name='static_image' value='https:&#47;&#47;public.tableau.com&#47;static&#47;images&#47;cs&#47;cs410_business_score&#47;sentimentdist&#47;1.png' /> <param name='animate_transition' value='yes' /><param name='display_static_image' value='yes' /><param name='display_spinner' value='yes' /><param name='display_overlay' value='yes' /><param name='display_count' value='yes' /></object></div>                <script type='text/javascript'>                    var divElement = document.getElementById('viz1543972869449');                    var vizElement = divElement.getElementsByTagName('object')[0];                    vizElement.style.width='1000px';vizElement.style.height='427px';                    var scriptElement = document.createElement('script');                    scriptElement.src = 'https://public.tableau.com/javascripts/api/viz_v1.js';                    vizElement.parentNode.insertBefore(scriptElement, vizElement);                </script>
+        </div>
+        <div style="float: left; width: 35%;">
+            <p style="font-size: 40px; font-weight: bold; color:#1a1a1a;">Sentiment score distribution</p>
+            <p style="font-size: 16px; font-weight: bold; color:#1a1a1a;">Assign sentiment score to each review</p>
+            <p class="contentText">With the average sentiment model generated, each reviews in the Yelp open data set
+                has been assigned with a sentiment probability between 0~1 (0: BAD, 1: GOOD) using predict_proba function
+                provided in Fasttext. If this was a prediction problem, this score assignment will be less meaningful
+                because it's similar to self-fulfilling prediction as the training set overlaps heavily with the predict
+                set. However, the original intention here is to have the reviews discriminative as much as possible using
+                its review text and its words using average sentiment model.
+            </p>
+            <p style="font-size: 16px; font-weight: bold; color:#1a1a1a;">Calculate average sentiment for each business</p>
+            <p class="contentText">By averaging the reviews of their target business (e.g. restaurant), each business can
+                have discriminative score rating other than just 1, 2, 3, 4, 5 star. For example, businesses originally
+                rated as 1-star, only 53% of them lies between 0~0.05 sentiment score range while the other 47% is
+                in 0.05~0.5 range. There is a chance that 1-star restaurant with 0.5 score may not be really
+                sentimentally bad as another 1-star one with 0.01 sentiment score.
+            </p>
+        </div>
+    </div>
+    <div class="section" style="width:100%; height:100%; padding-left:3%; padding-right:1%;">
+        <div style="float: right; width: 60%;">
+            <p style="font-size: 40px; font-weight: bold; color:#1a1a1a;"></p>
+            <div class='tableauPlaceholder' id='viz1543972948331' style='position: relative'><noscript><a href='#'><img alt=' ' src='https:&#47;&#47;public.tableau.com&#47;static&#47;images&#47;cs&#47;cs410_business_score&#47;bob&#47;1_rss.png' style='border: none' /></a></noscript><object class='tableauViz'  style='display:none;'><param name='host_url' value='https%3A%2F%2Fpublic.tableau.com%2F' /> <param name='embed_code_version' value='3' /> <param name='site_root' value='' /><param name='name' value='cs410_business_score&#47;bob' /><param name='tabs' value='no' /><param name='toolbar' value='yes' /><param name='static_image' value='https:&#47;&#47;public.tableau.com&#47;static&#47;images&#47;cs&#47;cs410_business_score&#47;bob&#47;1.png' /> <param name='animate_transition' value='yes' /><param name='display_static_image' value='yes' /><param name='display_spinner' value='yes' /><param name='display_overlay' value='yes' /><param name='display_count' value='yes' /></object></div>                <script type='text/javascript'>                    var divElement = document.getElementById('viz1543972948331');                    var vizElement = divElement.getElementsByTagName('object')[0];                    vizElement.style.width='1000px';vizElement.style.height='627px';                    var scriptElement = document.createElement('script');                    scriptElement.src = 'https://public.tableau.com/javascripts/api/viz_v1.js';                    vizElement.parentNode.insertBefore(scriptElement, vizElement);                </script>
+        </div>
+        <div style="float: left; width: 35%;">
+            <p style="font-size: 40px; font-weight: bold; color:#1a1a1a;">Review sentiment ranking</p>
+            <p style="font-size: 16px; font-weight: bold; color:#1a1a1a;">Rank business based on sentiment score</p>
+            <p class="contentText">With averaging sentiments score, we can rank each business in
+                clustered groups based on different meta data like cuisine, state, city, etc.<br><br><br>
+            </p>
+
+            <p style="font-size: 16px; font-weight: bold; color:#1a1a1a;">Find best of best, worst of worst</p>
+            <p class="contentText">Using this discriminative sentiment scoring on top of pre-labelled star ranking,
+                we could easily find best of best (highest sentiment score among 5-star places), worst of worst
+                (lowest sentiment score among 1-star place) business within selected business categories or city.
+                <br><br>You can use categories, state, city filters to look for your city's places.
+                However, unfortunately the data from Yelp was not a complete set (not covering all the US cities),
+                so there are chances that your city's place is not on the list. Please consider this as just a prototype project.
+            </p>
+        </div>
+    </div>
+    <div class="section" style="width:100%; height:100%; padding-left:3%; padding-right:1%;">
+        <div style="float: right; width: 60%;">
+            <p style="font-size: 40px; font-weight: bold; color:#1a1a1a;"></p>
+            <div class='tableauPlaceholder' id='viz1543973109970' style='position: relative'><noscript><a href='#'><img alt=' ' src='https:&#47;&#47;public.tableau.com&#47;static&#47;images&#47;cs&#47;cs410_reviews&#47;reviews&#47;1_rss.png' style='border: none' /></a></noscript><object class='tableauViz'  style='display:none;'><param name='host_url' value='https%3A%2F%2Fpublic.tableau.com%2F' /> <param name='embed_code_version' value='3' /> <param name='site_root' value='' /><param name='name' value='cs410_reviews&#47;reviews' /><param name='tabs' value='no' /><param name='toolbar' value='yes' /><param name='categories' value='food'/><param name='static_image' value='https:&#47;&#47;public.tableau.com&#47;static&#47;images&#47;cs&#47;cs410_reviews&#47;reviews&#47;1.png' /> <param name='animate_transition' value='yes' /><param name='display_static_image' value='yes' /><param name='display_spinner' value='yes' /><param name='display_overlay' value='yes' /><param name='display_count' value='yes' /></object></div>                <script type='text/javascript'>                    var divElement = document.getElementById('viz1543973109970');                    var vizElement = divElement.getElementsByTagName('object')[0];                    vizElement.style.width='1000px';vizElement.style.height='627px';                    var scriptElement = document.createElement('script');                    scriptElement.src = 'https://public.tableau.com/javascripts/api/viz_v1.js';                    vizElement.parentNode.insertBefore(scriptElement, vizElement);                </script>
+        </div>
+        <div style="float: left; width: 35%;">
+            <p style="font-size: 40px; font-weight: bold; color:#1a1a1a;">Reviews in detail</p>
+            <p style="font-size: 16px; font-weight: bold; color:#1a1a1a;">Look for reviews and their sentiment score</p>
+            <p class="contentText">You can select certain business using name, categories, state, city filters
+                and audit their reviews and sentiment score.<br><br>
+            </p>
+            <p style="font-size: 16px; font-weight: bold; color:#1a1a1a;">Limitations and future possible work</p>
+            <p class="contentText">As mentioned earlier, this Yelp open data is not a full set. It is missing out vast
+                amount of data and only covers reviews on subset cities. So it is likely that this tables might not be
+                so much helpful to end-users as it will miss out many businesses that they would like to check.
+                <br><br>
+                In order to obtain full set of data and make this approach more meaningful, programming web-crawler to
+                collect all possible reviews in the site would be preferred. Also, more meaningful way of implementing,
+                is to collect all reviews across different websites (e.g. Tripadvisor, Yelp, etc) and score each
+                businesses based on same general standard (sentiment model). This way the score could be more generalized
+                and gain more confidence with adding more value add to the end-user.
+                <br><br>
+                If the sentiment model can get more sophisticated along with word2vec representation,
+                different dimensions of sentiment could also be
+                calculated rather than just having plain BAD vs GOOD. (e.g. Service: BAD, Food: GOOD, Location: BAD)
+            </p>
+        </div>
+    </div>
+</div>
+<a id="gotoTop" href="#Intro">Back to top</a>
+
+</body>
+</html>
