@@ -169,6 +169,17 @@
     </div>
 </div>
 <a id="gotoTop" href="#Intro">Back to top</a>
+<script>
 
+    $(document).ready(function() {
+        $('#wrapper').fullpage({
+            sectionsColor: ['#f2f2f2', '#ffffff', '#ffffff', '#ffffff', '#ffffff', '#ffffff', '#ffffff'],
+            navigation: true,
+            navigationPosition: 'right',
+            navigationTooltips: ['Intro', 'Training', 'Performance', 'Distribution', 'Ranking', 'Reviews'],
+            anchors:['Intro', 'Training', 'Performance', 'Distribution', 'Ranking', 'Reviews']
+        });
+    });
+</script>
 </body>
 </html>
