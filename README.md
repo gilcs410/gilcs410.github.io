@@ -23,13 +23,13 @@ Yelp open data that has been used for this project can be downloaded [here](http
 
 ## Model training steps
 
-#####1. Download Yelp open data set
+####1. Download Yelp open data set
 This project uses Yelp data set challenge open data (Round 12). It contains 19,564,818 reviews 
 on 188,593 business in US and Canada (However, this data set does not cover 100% of cities though). 
 The file format is in JSON. Download it from [here](https://www.yelp.com/dataset). All we need is two files: 
 `yelp_academic_dataset_business.json, yelp_academic_dataset_review.json`
 
-#####2. Pre-process the text data
+####2. Pre-process the text data
 
 There are several pre-processing step needed before training the model:
 - Transform JSON format data into rows and columns using Pandas
@@ -43,7 +43,7 @@ All you need to do is run the following command.
 python3 preprocess.py
 ```
 
-#####3. Train the model using Fasttext (word2vec)
+####3. Train the model using Fasttext (word2vec)
 Fasttext is a library for efficient text classification and representation learning. It is similar as word2vec 
 which embeds words into vector representative using word co occurrence information within certain window. 
 The main difference between word2vec and Fasttext is that Fasttext can use sub-word ngram when embedding 
@@ -66,7 +66,7 @@ epoch:2: micro precision:0.9642, micro_recall:0.9703, micro_f1:0.9672, macro_pre
 epoch:3: micro precision:0.9677, micro_recall:0.9725, micro_f1:0.9701, macro_precision:0.9426, macro_recall:0.9383, macro_f1:0.9405, lr:0.01, duration:0:09:16 ====> Model improved!!!!
 ```
 
-#####4. Assign the sentiment score to all reviews
+####4. Assign the sentiment score to all reviews
 
 With the average sentiment model generated, each reviews in the Yelp open data set has been assigned with a sentiment 
 probability between 0~1 (0: BAD, 1: GOOD) using predict_proba function provided in Fasttext.
@@ -77,3 +77,7 @@ python3 assign.py [path_to_model_bin_file]
 ```
 
 Check out the visualization [here](https://gilcs410.github.io) to see how this data can be used.
+
+## Project presentation
+
+[Download PPT](https://github.com/gilcs410/gilcs410.github.io/blob/master/cs410_presentation.pptx?raw=true)
